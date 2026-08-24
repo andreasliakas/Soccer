@@ -161,6 +161,17 @@ body.picking .cell.vacant{background:rgba(245,185,63,.13);box-shadow:inset 0 0 0
 }
 @media (prefers-reduced-motion:reduce){.pool{transition:none}}
 
+/* ---------- stat entry ---------- */
+.onoff{font-family:var(--disp);font-size:13px;letter-spacing:.1em;border-radius:999px;padding:0 12px;
+  min-width:56px;height:36px;border:1px solid var(--line);background:var(--ink3);color:var(--muted)}
+.onoff.on{background:var(--turf);border-color:transparent;color:#06170F;font-weight:700}
+tr.grp td{background:#0B1029;padding:7px 10px;position:sticky;top:44px;z-index:1}
+tr.grp span{font-family:var(--disp);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+tr.grp span.field{color:var(--turf)}
+tr.bench td{opacity:.72}
+.statbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.statbar .count{font-family:var(--disp);font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
 /* ---------- tactics board ---------- */
 .boardbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
 .tools{display:flex;gap:4px;background:var(--ink2);border:1px solid var(--line);border-radius:11px;padding:4px}
@@ -728,6 +739,7 @@ function delPlayer(id){
   if(!confirm('Delete this player and their slot assignments? Game stats already recorded stay put.'))return;
   S.players=S.players.filter(p=>p.id!==id);
   Object.values(S.lineups).forEach(L=>Object.keys(L).forEach(k=>L[k]=L[k].map(x=>x===id?null:x)));
+  S.games.forEach(g=>{if(g.active)g.active=g.active.filter(x=>x!==id);});
   save();closeModal();renderRoster();renderPool();renderPitch();
 }
 
@@ -966,7 +978,7 @@ function renderSaved(){
 
 /* ============================ games ============================ */
 function blankGame(){return{id:uid(),date:new Date().toISOString().slice(0,10),opponent:'',location:'Home',
-  kind:'Conference',htUs:'',htThem:'',fUs:'',fThem:'',soUs:'',soThem:'',stats:{}};}
+  kind:'Conference',htUs:'',htThem:'',fUs:'',fThem:'',soUs:'',soThem:'',stats:{},active:[]};}
 function gStat(g,pid){if(!g.stats[pid])g.stats[pid]={goals:[],assists:0,shots:0,stops:0,good:0,saves:0,allowed:0,minutes:0};
   if(!Array.isArray(g.stats[pid].goals))g.stats[pid].goals=[];return g.stats[pid];}
 function peek(g,pid){return g.stats[pid]||{goals:[],assists:0,shots:0,stops:0,good:0,saves:0,allowed:0,minutes:0};}
@@ -996,6 +1008,7 @@ function renderGames(){
       <div style="font-family:var(--mono);font-size:19px;margin:4px 0">${scoreLine(g)}</div>
       <div style="color:var(--muted);font-size:12px">${g.date} · ${esc(g.location)} · ${esc(g.kind)}
         ${g.htUs!==''?` · HT ${g.htUs}–${g.htThem}`:''}</div>
+      ${(g.active&&g.active.length)?`<div style="color:var(--muted);font-size:12px">${g.active.length} on field</div>`:''}
       <div style="margin-top:9px;display:flex;gap:6px">
         <button class="btn sm" onclick="openGame('${g.id}')">Details</button>
         <button class="btn sm gold" onclick="openStats('${g.id}')">Stats</button>
@@ -1052,6 +1065,35 @@ function delGame(id){if(!confirm('Delete this game and its stats?'))return;
 
 /* ---------- stat entry ---------- */
 let statTab='field';
+const ROLE_ORDER=['F','M','D','GK','U'];
+const ROLE_NAME={F:'Forwards',M:'Midfield',D:'Defense',GK:'Goalies',U:'Unassigned'};
+const POS_BUCKET={ST:'F',CF:'F',F:'F',LW:'F',RW:'F',LS:'F',RS:'F',
+  CM:'M',CAM:'M',CDM:'M',LM:'M',RM:'M',LCM:'M',RCM:'M',LDM:'M',RDM:'M',
+  LB:'D',CB:'D',RB:'D',SW:'D',LWB:'D',RWB:'D',LCB:'D',RCB:'D',
+  GK:'GK'};
+/* Where a player sits in the depth chart beats their listed positions —
+   that is the job they actually do. Starters first, then any depth slot,
+   then whatever positions are on their roster card. */
+function roleOf(pid){
+  const keys=slotKeys(S.formation);
+  for(const k of keys)if(slotArr(k)[0]===pid)return POS_BUCKET[posLabel(k)]||'U';
+  for(const k of keys)if(slotArr(k).includes(pid))return POS_BUCKET[posLabel(k)]||'U';
+  const p=P(pid);if(!p)return 'U';
+  for(const r of ROLE_ORDER)if(p.positions.some(x=>POS_BUCKET[x]===r))return r;
+  return 'U';
+}
+function isOn(g,pid){return (g.active||[]).includes(pid);}
+function toggleActive(pid){
+  const g=window._statGame;g.active=g.active||[];
+  const i=g.active.indexOf(pid);
+  if(i>=0)g.active.splice(i,1);else g.active.push(pid);
+  save();drawStats(true);renderGames();
+}
+function activeFromStarters(){
+  const g=window._statGame;g.active=[...starterIds()];
+  save();drawStats(true);toast('On field set from the '+S.formation+' starters');
+}
+function activeNone(){const g=window._statGame;g.active=[];save();drawStats(true);}
 function openStats(id){
   const g=S.games.find(x=>x.id===id);window._statGame=g;
   modal(`<div class="modal wide">
@@ -1061,43 +1103,86 @@ function openStats(id){
       <button id="stF" class="on" onclick="statTab='field';drawStats()">Field</button>
       <button id="stG" onclick="statTab='keeper';drawStats()">Goalkeeping</button>
     </div>
-    <input type="text" id="statSearch" placeholder="Filter players…" oninput="drawStats()" style="margin-bottom:10px">
-    <label style="font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:10px">
-      <input type="checkbox" id="statOnlyPlayed" style="width:auto" onchange="drawStats()"> Only show players with entries
-    </label>
-    <div class="scroll" style="max-height:52vh"><table id="statTable"></table></div>
+    <div class="statbar">
+      <span class="count" id="onCount"></span>
+      <button class="btn sm gold" onclick="activeFromStarters()">Use lineup starters</button>
+      <button class="btn sm ghost" onclick="activeNone()">Clear on-field</button>
+      <input type="text" id="statSearch" placeholder="Filter players…" oninput="drawStats()" style="flex:1;min-width:150px">
+    </div>
+    <div class="statbar" style="margin-bottom:12px">
+      <label style="font-size:14px;color:var(--muted);display:flex;gap:7px;align-items:center">
+        <input type="checkbox" id="statHideBench" style="width:auto" onchange="drawStats()"> Hide bench</label>
+      <label style="font-size:14px;color:var(--muted);display:flex;gap:7px;align-items:center">
+        <input type="checkbox" id="statOnlyPlayed" style="width:auto" onchange="drawStats()"> Only players with entries</label>
+    </div>
+    <div class="scroll" id="statScroll" style="max-height:52dvh"><table id="statTable"></table></div>
   </div>`);
   statTab='field';drawStats();
 }
-function drawStats(){
+function drawStats(keepScroll){
   const g=window._statGame;
+  g.active=g.active||[];
   document.getElementById('stF').classList.toggle('on',statTab==='field');
   document.getElementById('stG').classList.toggle('on',statTab==='keeper');
+  const box=document.getElementById('statScroll');
+  const top=keepScroll&&box?box.scrollTop:0;
   const q=document.getElementById('statSearch').value.trim().toLowerCase();
   const only=document.getElementById('statOnlyPlayed').checked;
+  const hideBench=document.getElementById('statHideBench').checked;
   const has=p=>{const s=g.stats[p.id];if(!s)return false;
     return s.goals.length||s.assists||s.shots||s.stops||s.good||s.saves||s.allowed||s.minutes;};
-  const list=S.players.filter(p=>(!q||p.name.toLowerCase().includes(q))&&(!only||has(p))).sort(byName);
-  const t=document.getElementById('statTable');
-  if(statTab==='field'){
-    t.innerHTML=`<thead><tr><th class="nosort">Player</th><th class="nosort">Goals</th>
-      <th class="nosort n">Assists</th><th class="nosort n">Shots on goal</th><th class="nosort n">Def. stops</th><th class="nosort n">Good plays</th></tr></thead>
-      <tbody>${list.map(p=>{const s=peek(g,p.id);return `<tr>
-        <td><strong>${esc(p.name)}</strong> <span style="color:var(--muted);font-family:var(--mono);font-size:11px">${esc(p.number||'')}</span></td>
+
+  document.getElementById('onCount').textContent='On field: '+g.active.length;
+
+  /* Keepers appear on BOTH tabs — they take shots and win balls too.
+     The only thing that changes is which end of the list they sort to. */
+  const order=statTab==='keeper'?['GK','D','M','F','U']:ROLE_ORDER;
+  const list=S.players
+    .filter(p=>(!q||p.name.toLowerCase().includes(q))&&(!only||has(p))&&(!hideBench||isOn(g,p.id)))
+    .sort((a,b)=>{
+      const ao=isOn(g,a.id),bo=isOn(g,b.id);
+      if(ao!==bo)return ao?-1:1;
+      const d=order.indexOf(roleOf(a.id))-order.indexOf(roleOf(b.id));
+      return d||a.name.localeCompare(b.name);
+    });
+
+  const cols=statTab==='field'?6:4;
+  let last='',body='';
+  list.forEach(p=>{
+    const on=isOn(g,p.id),role=roleOf(p.id),key=(on?'on':'off')+role;
+    if(key!==last){
+      last=key;
+      body+=`<tr class="grp"><td colspan="${cols}">
+        <span class="${on?'field':''}">${on?'On field':'Bench'} · ${ROLE_NAME[role]}</span></td></tr>`;
+    }
+    const s=peek(g,p.id);
+    const nameCell=`<td><button class="onoff ${on?'on':''}" onclick="toggleActive('${p.id}')"
+        aria-pressed="${on}">${on?'ON':'OFF'}</button>
+      <strong style="margin-left:8px">${esc(p.name)}</strong>
+      <span style="color:var(--muted);font-family:var(--mono);font-size:12px">${esc(p.number||'')}</span></td>`;
+    if(statTab==='field'){
+      body+=`<tr class="${on?'':'bench'}">${nameCell}
         <td>${s.goals.map((tg,i)=>`<span class="chip gold">${esc(tg||'GOAL')}<button onclick="delGoal('${p.id}',${i})">×</button></span> `).join('')}
-            <button class="btn sm" onclick="addGoal('${p.id}')">+ Goal</button></td>
+          <button class="btn sm" onclick="addGoal('${p.id}')">+ Goal</button></td>
         ${['assists','shots','stops','good'].map(k=>`<td class="n">${step(p.id,k,s[k])}</td>`).join('')}
-      </tr>`;}).join('')}</tbody>`;
-  }else{
-    t.innerHTML=`<thead><tr><th class="nosort">Player</th><th class="nosort n">Saves</th><th class="nosort n">Goals allowed</th>
-      <th class="nosort n">Minutes in goal</th></tr></thead>
-      <tbody>${list.map(p=>{const s=peek(g,p.id);return `<tr>
-        <td><strong>${esc(p.name)}</strong></td>
+      </tr>`;
+    }else{
+      body+=`<tr class="${on?'':'bench'}">${nameCell}
         ${['saves','allowed'].map(k=>`<td class="n">${step(p.id,k,s[k])}</td>`).join('')}
-        <td class="n"><input type="number" inputmode="numeric" style="width:80px;text-align:right" value="${s.minutes||0}"
+        <td class="n"><input type="number" inputmode="numeric" style="width:88px;text-align:right" value="${s.minutes||0}"
            onchange="setStat('${p.id}','minutes',+this.value)"></td>
-      </tr>`;}).join('')}</tbody>`;
-  }
+      </tr>`;
+    }
+  });
+  if(!body)body=`<tr><td colspan="${cols}" class="empty" style="border:0">No players match.</td></tr>`;
+
+  const head=statTab==='field'
+    ? `<tr><th class="nosort">Player</th><th class="nosort">Goals</th><th class="nosort n">Assists</th>
+       <th class="nosort n">Shots on goal</th><th class="nosort n">Def. stops</th><th class="nosort n">Good plays</th></tr>`
+    : `<tr><th class="nosort">Player</th><th class="nosort n">Saves</th><th class="nosort n">Goals allowed</th>
+       <th class="nosort n">Minutes in goal</th></tr>`;
+  document.getElementById('statTable').innerHTML=`<thead>${head}</thead><tbody>${body}</tbody>`;
+  if(box&&keepScroll)box.scrollTop=top;
 }
 function step(pid,k,v){return `<span class="stepper">
   <button onclick="bump('${pid}','${k}',-1)">−</button><span class="v" id="v_${pid}_${k}">${v||0}</span>
@@ -1105,7 +1190,7 @@ function step(pid,k,v){return `<span class="stepper">
 function bump(pid,k,d){const s=gStat(window._statGame,pid);s[k]=Math.max(0,(s[k]||0)+d);
   document.getElementById('v_'+pid+'_'+k).textContent=s[k];save();}
 function setStat(pid,k,v){gStat(window._statGame,pid)[k]=Math.max(0,v||0);save();}
-function delGoal(pid,i){gStat(window._statGame,pid).goals.splice(i,1);save();drawStats();}
+function delGoal(pid,i){gStat(window._statGame,pid).goals.splice(i,1);save();drawStats(true);}
 function addGoal(pid){
   const tags=S.settings.goalTags;
   modal(`<div class="modal" style="max-width:420px">
@@ -1258,6 +1343,7 @@ function migrate(d){
   d.settings.positions=d.settings.positions||[];
   d.settings.grades=d.settings.grades||[];
   d.lineups=d.lineups||{};d.games=d.games||[];d.boards=d.boards||[];
+  d.games.forEach(g=>{g.stats=g.stats||{};g.active=g.active||[];});
   d.boards.forEach(b=>{b.strokes=b.strokes||[];b.view=b.view||'full';});
   if(!FORMATIONS[d.formation])d.formation='3-2-3-2';
   d.players.forEach(p=>{p.skills=Object.assign({overall:0,speed:0,control:0,offense:0,defense:0,stamina:0},p.skills||{});
