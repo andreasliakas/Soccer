@@ -1,0 +1,741 @@
+{
+  "players": [
+    {
+      "id": "z77tmw8n",
+      "name": "Andrew",
+      "number": "23",
+      "grade": "7th",
+      "positions": [
+        "CDM",
+        "CM",
+        "CAM"
+      ],
+      "skills": {
+        "overall": 5,
+        "speed": 5,
+        "control": 5,
+        "offense": 5,
+        "defense": 4,
+        "stamina": 5
+      },
+      "notes": []
+    },
+    {
+      "id": "wn98blf1",
+      "name": "Luke",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "dvv1jswz",
+      "name": "Lucas",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "mfz3pr2r",
+      "name": "Emmy",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "svzhdwp6",
+      "name": "Dylan",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "swqec623",
+      "name": "Ale",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "1rnl8ybi",
+      "name": "Brantley",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "113mkvut",
+      "name": "Vitalio",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "ynd733w5",
+      "name": "Michael",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "6ua4osn6",
+      "name": "Chase",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "cie57n0b",
+      "name": "Odin",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "miup6pjl",
+      "name": "James",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "z7nmuqgg",
+      "name": "Mason",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "nif66op8",
+      "name": "Karsyn",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "cio5e9oq",
+      "name": "Gabe",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "ehww7k1g",
+      "name": "Grayson",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "8u782xjq",
+      "name": "Damian",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "r9jk1uy6",
+      "name": "Adrian",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "ory638dn",
+      "name": "Cameron",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "f5y8t58a",
+      "name": "Brennan",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "7yox1ar3",
+      "name": "Scott",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "xqytsojr",
+      "name": "Cooper",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "zomlpsn9",
+      "name": "Noah",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "vutlwmv8",
+      "name": "Jerry",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "grgp7ze3",
+      "name": "Ben",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "wcpbw32f",
+      "name": "Edgar",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "wkbi5zf5",
+      "name": "Dean",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "0nnwv56y",
+      "name": "Anna",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "cl0vm7j0",
+      "name": "Judson",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "7910i7eg",
+      "name": "Nathan",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "tg4isid5",
+      "name": "Mikey",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "cq1xdu1w",
+      "name": "Gavin",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "np40m2as",
+      "name": "Luke B.",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    },
+    {
+      "id": "4s243pun",
+      "name": "Ellie",
+      "number": "",
+      "grade": "",
+      "positions": [],
+      "skills": {
+        "overall": 0,
+        "speed": 0,
+        "control": 0,
+        "offense": 0,
+        "defense": 0,
+        "stamina": 0
+      },
+      "notes": []
+    }
+  ],
+  "games": [
+    {
+      "id": "dproxy8p",
+      "date": "2026-08-24",
+      "opponent": "Somonauk",
+      "location": "Home",
+      "kind": "Conference",
+      "htUs": "",
+      "htThem": "",
+      "fUs": "",
+      "fThem": "",
+      "soUs": "",
+      "soThem": "",
+      "stats": {
+        "r9jk1uy6": {
+          "goals": [],
+          "assists": 0,
+          "shots": 0,
+          "stops": 0,
+          "good": 0,
+          "saves": 0,
+          "allowed": 0,
+          "minutes": 0
+        }
+      },
+      "active": [],
+      "tier": "A"
+    }
+  ],
+  "boards": [],
+  "formation": "3-2-3-2",
+  "lineups": {
+    "3-2-3-2": {
+      "GK": [
+        "grgp7ze3",
+        "cl0vm7j0",
+        "z7nmuqgg"
+      ],
+      "r0c0": [
+        "vutlwmv8",
+        "0nnwv56y",
+        "cio5e9oq"
+      ],
+      "r0c1": [
+        "7yox1ar3",
+        "cl0vm7j0",
+        "z7nmuqgg"
+      ],
+      "r0c2": [
+        "xqytsojr",
+        "wkbi5zf5",
+        "6ua4osn6"
+      ],
+      "r1c0": [
+        "dvv1jswz",
+        "113mkvut",
+        "nif66op8"
+      ],
+      "r1c1": [
+        "zomlpsn9",
+        "ynd733w5",
+        "cie57n0b"
+      ],
+      "r2c0": [
+        "mfz3pr2r",
+        "tg4isid5",
+        "cq1xdu1w"
+      ],
+      "r2c1": [
+        "z77tmw8n",
+        "wcpbw32f",
+        "1rnl8ybi"
+      ],
+      "r2c2": [
+        "wn98blf1",
+        "7910i7eg",
+        "4s243pun"
+      ],
+      "r3c0": [
+        "ory638dn",
+        "svzhdwp6",
+        "np40m2as"
+      ],
+      "r3c1": [
+        "f5y8t58a",
+        "swqec623",
+        "miup6pjl"
+      ]
+    },
+    "4-4-2": {
+      "r0c0": [
+        "dvv1jswz",
+        null,
+        null
+      ],
+      "r0c1": [
+        "7yox1ar3",
+        null,
+        null
+      ],
+      "r0c2": [
+        "vutlwmv8",
+        null,
+        null
+      ],
+      "r0c3": [
+        "xqytsojr",
+        null,
+        null
+      ],
+      "r1c0": [
+        "ory638dn",
+        null,
+        null
+      ],
+      "r1c1": [
+        "f5y8t58a",
+        "z77tmw8n",
+        null
+      ],
+      "r1c2": [
+        "wn98blf1",
+        null,
+        null
+      ],
+      "r1c3": [
+        "zomlpsn9",
+        null,
+        null
+      ],
+      "r2c0": [
+        "mfz3pr2r",
+        null,
+        null
+      ],
+      "r2c1": [
+        "z77tmw8n",
+        null,
+        null
+      ],
+      "GK": [
+        "cl0vm7j0",
+        null,
+        null
+      ]
+    }
+  },
+  "settings": {
+    "goalTags": [
+      {
+        "code": "H",
+        "label": "Header"
+      },
+      {
+        "code": "CK",
+        "label": "Corner kick"
+      },
+      {
+        "code": "FK",
+        "label": "Free kick"
+      },
+      {
+        "code": "PK",
+        "label": "Penalty kick"
+      }
+    ],
+    "positions": [
+      "GK",
+      "SW",
+      "LB",
+      "CB",
+      "RB",
+      "LWB",
+      "RWB",
+      "CDM",
+      "CM",
+      "CAM",
+      "LM",
+      "RM",
+      "LW",
+      "RW",
+      "ST"
+    ],
+    "grades": [
+      "6th",
+      "7th",
+      "8th"
+    ]
+  }
+}

@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Royals">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#0C1026">
-<title>Royals — Lineup &amp; Stats</title>
+<title>Lineup &amp; Stats</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
@@ -124,6 +124,39 @@ nav.tabs button:hover{color:var(--ink)}
 nav.tabs button.on{color:var(--brand);border-bottom-color:var(--brand)}
 html[data-theme="dark"] nav.tabs button.on{color:#fff;border-bottom-color:#fff}
 
+/* --- team switcher --- */
+.team-menu{position:relative}
+.team-btn{display:inline-flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line-strong);
+  border-radius:999px;padding:5px 14px 5px 5px;color:var(--ink);min-height:44px;font-family:var(--disp);
+  font-weight:600;font-size:15px;letter-spacing:.06em;cursor:pointer;transition:background .12s,border-color .12s}
+.team-btn:hover{background:var(--surface-3);border-color:var(--brand)}
+.team-btn .badge-crest{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden}
+.team-btn .badge-crest svg{width:100%;height:100%}
+.team-btn .caret{color:var(--muted);font-size:11px;margin-left:2px}
+.team-pop{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--line-strong);
+  border-radius:14px;box-shadow:var(--shadow-lg);padding:6px;min-width:240px;z-index:50;display:none}
+.team-pop.on{display:block}
+.team-pop button.opt{width:100%;text-align:left;display:flex;align-items:center;gap:10px;background:none;border:0;
+  border-radius:9px;padding:9px 10px;color:var(--ink);font-size:15px;min-height:48px;cursor:pointer}
+.team-pop button.opt:hover{background:var(--surface-2)}
+.team-pop button.opt.on{background:var(--brand);color:#fff}
+.team-pop button.opt.on .team-sub{color:rgba(255,255,255,.75)}
+.team-pop .team-mini{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden}
+.team-pop .team-mini svg{width:100%;height:100%}
+.team-pop .team-name{flex:1;line-height:1.2}
+.team-pop .team-sub{font-size:12px;color:var(--muted);font-family:var(--body);font-weight:400}
+.team-pop hr{border:0;border-top:1px solid var(--line);margin:5px 8px}
+.team-pop .add{color:var(--brand);font-weight:600}
+html[data-theme="dark"] .team-pop .add{color:#8FB0E0}
+
+/* Compact on narrow screens — hide the team name text, keep the crest */
+@media (max-width:640px){
+  .team-btn .team-name-txt{display:none}
+  .team-btn{padding:5px 10px 5px 5px}
+}
+
 .theme-toggle{background:var(--surface-2);border:1px solid var(--line);border-radius:999px;
   width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
 .theme-toggle:hover{background:var(--surface-3)}
@@ -154,6 +187,20 @@ input[type=text],input[type=number],input[type=date],select,textarea{
   color:var(--ink);transition:border-color .12s,box-shadow .12s}
 input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(0,74,152,.18);outline:none}
 input[type=checkbox]{width:22px;height:22px;accent-color:var(--brand)}
+.colorpick{display:flex;align-items:stretch;gap:6px;background:var(--sunken);border:1px solid var(--line-strong);
+  border-radius:10px;padding:4px;min-height:44px}
+.colorpick input[type=color]{-webkit-appearance:none;appearance:none;background:transparent;border:0;padding:0;
+  width:44px;height:36px;flex:0 0 44px;border-radius:6px;cursor:pointer;overflow:hidden}
+.colorpick input[type=color]::-webkit-color-swatch-wrapper{padding:0;border-radius:6px}
+.colorpick input[type=color]::-webkit-color-swatch{border:1px solid var(--line-strong);border-radius:6px}
+.colorpick input[type=color]::-moz-color-swatch{border:1px solid var(--line-strong);border-radius:6px}
+.colorpick input[type=text]{flex:1;min-height:0;padding:6px 10px;background:transparent;border:0;font-family:var(--mono);font-size:14px;text-transform:uppercase;min-width:0;width:auto}
+.colorpick input[type=text]:focus{box-shadow:none}
+.preset-btn{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:8px;padding:6px 12px 6px 6px;cursor:pointer;font-size:13px;color:var(--ink);min-height:38px}
+.preset-btn:hover{border-color:var(--brand)}
+.preset-btn .swatches{display:flex;gap:2px}
+.preset-btn .swatches i{width:16px;height:16px;border-radius:3px;display:block}
 label.f{display:block;margin-bottom:12px}
 label.f>span{display:block;font-family:var(--disp-cond);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:600}
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
@@ -295,13 +342,16 @@ tbody tr:last-child td{border-bottom:0}
 td.n,th.n{text-align:right;font-family:var(--mono);font-size:14px}
 .scroll{overflow:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line-strong);border-radius:14px;
   background:var(--surface);box-shadow:var(--shadow);width:100%}
-/* Anchor tables to the bottom of the viewport so a coach's thumb reaches the scrollbar
-   without stretching. .barpad on the .bar above reserves space for it. */
-.view.has-table .scroll{position:fixed;left:calc(20px + env(safe-area-inset-left));right:calc(20px + env(safe-area-inset-right));
+/* Anchor a single-table view to the bottom of the viewport so a coach's thumb
+   reaches the scrollbar without stretching. Views with two tables (like Season)
+   opt out so both can scroll naturally in page flow. */
+.view.single-table .scroll{position:fixed;left:calc(20px + env(safe-area-inset-left));right:calc(20px + env(safe-area-inset-right));
   bottom:calc(16px + env(safe-area-inset-bottom));top:auto;max-height:none;
   height:calc(100dvh - var(--table-top,190px))}
-.view.has-table{padding-bottom:0}
-@media(max-width:1023px){.view.has-table .scroll{left:12px;right:12px}}
+.view.single-table{padding-bottom:0}
+@media(max-width:1023px){.view.single-table .scroll{left:12px;right:12px}}
+/* Season has two stacked tables — give each a reasonable cap and let the page scroll. */
+.view#v-season .scroll{max-height:60dvh}
 th{user-select:none}
 th.sortable{cursor:pointer;padding-right:22px;position:relative}
 th.sortable::after{content:"";position:absolute;right:8px;top:50%;transform:translateY(-50%);
@@ -399,8 +449,16 @@ html[data-theme="dark"] .modal-head h2{color:#fff}
 
 <header class="top">
   <div class="top-in">
-    <div class="brand"><svg class="crest-mark" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M60 52 L70 30 L82 46 L100 22 L118 46 L130 30 L140 52 Z" fill="var(--crest-fill,#fff)"/><rect x="58" y="52" width="84" height="10" fill="var(--crest-fill,#fff)"/><circle cx="100" cy="18" r="4" fill="currentColor"/><g fill="currentColor" stroke="none"><circle cx="66" cy="57" r="1.6"/><circle cx="78" cy="57" r="1.6"/><circle cx="90" cy="57" r="1.6"/><circle cx="100" cy="57" r="1.6"/><circle cx="110" cy="57" r="1.6"/><circle cx="122" cy="57" r="1.6"/><circle cx="134" cy="57" r="1.6"/></g><path d="M52 70 H148 V120 Q148 158 100 176 Q52 158 52 120 Z" fill="var(--crest-fill,#fff)"/><path d="M52 70 H148 V88 H52 Z" fill="currentColor" stroke="none"/><text x="100" y="146" font-family="var(--gothic)" font-weight="700" font-size="52" text-anchor="middle" fill="currentColor" stroke="none">R</text><path d="M40 174 L60 168 L100 176 L140 168 L160 174 L152 190 L140 184 L100 192 L60 184 L48 190 Z" fill="var(--crest-fill,#fff)"/><text x="100" y="187" font-family="var(--disp)" font-weight="700" font-size="11" letter-spacing="2" text-anchor="middle" fill="currentColor" stroke="none">ROYALS</text></g></svg><div class="wordmark"><span class="n">ROYALS</span><span class="sub">Lineup &amp; Stats</span></div></div>
+    <div class="brand"><span class="crest-mark" id="brandCrest"></span><div class="wordmark"><span class="n" id="brandName">Team</span><span class="sub">Lineup &amp; Stats</span></div></div>
     <nav class="tabs" id="tabs"></nav>
+    <div class="team-menu" id="teamMenu">
+      <button class="team-btn" onclick="toggleTeamMenu(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="badge-crest" id="teamCrestMini"></span>
+        <span class="team-name-txt" id="teamNameTxt">Team</span>
+        <span class="caret">▼</span>
+      </button>
+      <div class="team-pop" id="teamPop" role="menu"></div>
+    </div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
     </button>
@@ -457,7 +515,7 @@ html[data-theme="dark"] .modal-head h2{color:#fff}
   </section>
 
   <!-- ROSTER -->
-  <section class="view has-table" id="v-roster">
+  <section class="view has-table single-table" id="v-roster">
     <div class="bar">
       <button class="btn gold" onclick="openPlayer(null)">Add player</button>
       <select id="rPos" onchange="renderRoster()" style="max-width:170px"></select>
@@ -513,7 +571,7 @@ html[data-theme="dark"] .modal-head h2{color:#fff}
   </section>
 
   <!-- RECORD -->
-  <section class="view has-table" id="v-record">
+  <section class="view has-table single-table" id="v-record">
     <div class="bar"><span class="spacer"></span></div>
     <div class="kpis" id="recordKpis"></div>
     <div class="scroll"><table id="recordTable"></table></div>
@@ -566,6 +624,217 @@ html[data-theme="dark"] .modal-head h2{color:#fff}
 
 <script>
 /* ============================ theme ============================ */
+/* ============================ teams ============================ */
+const CRESTS={
+  'default-royals':`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M 40 50 H 160 V 110 Q 160 155 100 180 Q 40 155 40 110 Z" fill="currentColor" opacity="0.12"/><path d="M 40 50 H 160 V 110 Q 160 155 100 180 Q 40 155 40 110 Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><path d="M 40 50 H 160 V 74 H 40 Z" fill="currentColor"/><text x="100" y="150" font-family="var(--gothic),serif" font-weight="700" font-size="82" text-anchor="middle" fill="currentColor">R</text></svg>`,
+  'default-7united':`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><defs><path id="topArc" d="M 32,100 A 68,68 0 0,1 168,100"/><path id="botArc" d="M 32,110 A 68,68 0 0,0 168,110"/></defs><circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><text font-family="var(--disp),Georgia,serif" font-weight="700" font-size="18" letter-spacing="3" fill="currentColor"><textPath href="#topArc" startOffset="50%" text-anchor="middle">7 UNITED</textPath></text><text font-family="var(--disp),Georgia,serif" font-weight="700" font-size="17" letter-spacing="4" fill="currentColor"><textPath href="#botArc" startOffset="50%" text-anchor="middle">SOCCER CLUB</textPath></text><polygon points="42,100 45,94 48,100 45,106" fill="currentColor"/><polygon points="152,100 155,94 158,100 155,106" fill="currentColor"/><text x="62" y="106" font-family="Georgia,serif" font-weight="700" font-size="10" text-anchor="middle" fill="currentColor">EST.</text><text x="138" y="106" font-family="Georgia,serif" font-weight="700" font-size="10" text-anchor="middle" fill="currentColor">2026</text><path d="M 78,68 L 122,68 L 130,84 L 100,132 L 70,84 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><text x="100" y="118" font-family="Georgia,serif" font-style="italic" font-weight="700" font-size="52" text-anchor="middle" fill="currentColor">7</text></svg>`
+};
+function crestSVG(key){return CRESTS[key]||CRESTS['default-royals'];}
+/* Each crest has a preferred visual weighting. Circle-style badges (7U-style)
+   read as gold-on-black; shield-style badges read as ink-on-plate. */
+const CREST_STYLES={
+  'default-royals':t=>({bg:'#FFFFFF',fg:t.brand.primary}),
+  'default-7united':t=>({bg:t.brand.accent||'#0D0D0D',fg:t.brand.primary})
+};
+function crestPaint(t){
+  const fn=CREST_STYLES[t.crest]||CREST_STYLES['default-royals'];
+  return fn(t);
+}
+
+function toggleTeamMenu(e){
+  e&&e.stopPropagation();
+  const pop=document.getElementById('teamPop');
+  const btn=document.querySelector('.team-btn');
+  const open=pop.classList.toggle('on');
+  btn.setAttribute('aria-expanded',open);
+  if(open){setTimeout(()=>document.addEventListener('click',closeTeamMenuOnce),0);}
+}
+function closeTeamMenuOnce(e){
+  const pop=document.getElementById('teamPop');
+  if(pop&&!pop.contains(e.target)){pop.classList.remove('on');
+    document.querySelector('.team-btn')?.setAttribute('aria-expanded','false');}
+  document.removeEventListener('click',closeTeamMenuOnce);
+}
+function renderTeamSwitcher(){
+  const cur=T();
+  /* Each crest declares its own preferred background/foreground mapping.
+     "shield" crests are drawn as ink on a light plate; "circle" crests as
+     ink on a dark plate. This is what stops the Royals crest turning gold
+     when 7U is active. */
+  const paint=crestPaint(cur);
+  document.getElementById('teamCrestMini').setAttribute('style',
+    'background:'+paint.bg+';color:'+paint.fg);
+  document.getElementById('teamCrestMini').innerHTML=crestSVG(cur.crest);
+  document.getElementById('teamNameTxt').textContent=cur.short||cur.name;
+  const pop=document.getElementById('teamPop');
+  /* Each dropdown row renders in its own team's palette so the crests
+     are recognisable regardless of which team is currently selected. */
+  pop.innerHTML=S.teams.map(t=>{const p=crestPaint(t);return `
+    <button class="opt ${t.id===S.currentTeamId?'on':''}" onclick="setCurrentTeam('${t.id}');toggleTeamMenu()">
+      <span class="team-mini" style="background:${p.bg};color:${p.fg}">${crestSVG(t.crest)}</span>
+      <span class="team-name"><div>${esc(t.name)}</div><div class="team-sub">${t.players.length} players · ${t.games.length} games</div></span>
+    </button>`;}).join('')+
+    `<hr><button class="opt add" onclick="toggleTeamMenu();openTeamEditor(null)">＋ Add team</button>
+     <button class="opt" onclick="toggleTeamMenu();openTeamEditor('${cur.id}')">✎ Edit ${esc(cur.short||cur.name)}</button>`;
+}
+
+/* Apply the current team's colours as CSS variables. Only overrides brand accents;
+   the light/dark theme itself is unchanged. */
+/* Sync page title with the current team. */
+function applyTitle(){
+  const t=T();if(!t)return;
+  document.title=(t.short||t.name)+' — Lineup & Stats';
+}
+function applyBrand(){
+  applyTitle();
+  const t=T();if(!t||!t.brand)return;
+  /* Header crest + wordmark come from the current team. Colors applied
+     inline so the crest visually belongs to that team even before global
+     brand vars propagate. */
+  const hc=document.getElementById('brandCrest');
+  const hn=document.getElementById('brandName');
+  if(hc){const p=crestPaint(t);hc.style.color=p.fg;hc.style.background='transparent';hc.innerHTML=crestSVG(t.crest);}
+  if(hn)hn.textContent=(t.short||t.name).toUpperCase();
+  const r=document.documentElement.style;
+  r.setProperty('--brand',t.brand.primary);
+  r.setProperty('--brand-ink',t.brand.ink);
+  r.setProperty('--brand-tint',t.brand.primary+'22');
+  r.setProperty('--gold',t.brand.accent);
+}
+
+function openTeamEditor(id){
+  const isNew=!id;
+  const t=isNew?{id:uid(),name:'',short:'',brand:{primary:'#004A98',ink:'#003273',accent:'#C9A227'},crest:'default-royals',players:[],games:[],boards:[],lineups:{},formation:'3-2-3-2'}:S.teams.find(x=>x.id===id);
+  const canDelete=!isNew&&S.teams.length>1;
+  modal(`<div class="modal" style="max-width:520px">
+    <div class="modal-head"><h2>${isNew?'New team':'Edit team'}</h2>
+      <button class="btn sm" onclick="closeModal()">Close</button></div>
+    <div class="row">
+      <label class="f" style="flex:2"><span>Full name</span><input type="text" id="tName" value="${esc(t.name)}" placeholder="e.g. 7 United Elite"></label>
+      <label class="f"><span>Short label</span><input type="text" id="tShort" value="${esc(t.short||'')}" placeholder="e.g. 7 United" maxlength="12"></label>
+    </div>
+    <div class="sec"><div class="eyebrow">Crest</div>
+      <div style="display:flex;gap:10px;margin-top:8px" id="crestPicker">
+        ${Object.keys(CRESTS).map(k=>{const p=crestPaint({crest:k,brand:t.brand});return `<button type="button" class="team-mini" data-crest="${k}"
+          style="width:56px;height:56px;background:${p.bg};color:${p.fg};border:3px solid ${k===t.crest?'var(--ink)':'transparent'};border-radius:50%;cursor:pointer;padding:2px"
+          onclick="pickCrest('${k}')">${crestSVG(k)}</button>`;}).join('')}
+      </div></div>
+    <div class="sec"><div class="eyebrow">Colours</div>
+      <div class="row" style="margin-top:8px">
+        <label class="f"><span>Primary</span>
+          <div class="colorpick">
+            <input type="color" value="${t.brand.primary}" onchange="syncColor('tPrimary',this.value)" oninput="syncColor('tPrimary',this.value)">
+            <input type="text" id="tPrimary" value="${t.brand.primary}" pattern="#[0-9A-Fa-f]{6}" maxlength="7" oninput="syncColorText('tPrimary',this.value)">
+          </div></label>
+        <label class="f"><span>Darker shade</span>
+          <div class="colorpick">
+            <input type="color" value="${t.brand.ink}" onchange="syncColor('tInk',this.value)" oninput="syncColor('tInk',this.value)">
+            <input type="text" id="tInk" value="${t.brand.ink}" pattern="#[0-9A-Fa-f]{6}" maxlength="7" oninput="syncColorText('tInk',this.value)">
+          </div></label>
+        <label class="f"><span>Accent</span>
+          <div class="colorpick">
+            <input type="color" value="${t.brand.accent}" onchange="syncColor('tAccent',this.value)" oninput="syncColor('tAccent',this.value)">
+            <input type="text" id="tAccent" value="${t.brand.accent}" pattern="#[0-9A-Fa-f]{6}" maxlength="7" oninput="syncColorText('tAccent',this.value)">
+          </div></label>
+      </div>
+      <p style="color:var(--muted);font-size:12px;margin:4px 0 0">Primary is used for buttons, tabs and the crest ring. Darker shade is for hover states. Accent is used for the goal/tier chips. Type a hex code or tap the swatch to open a colour picker.</p>
+      <div class="sec" style="border:0;padding-top:8px">
+        <div class="eyebrow" style="margin-bottom:6px">Presets</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px" id="brandPresets"></div>
+      </div>
+    </div>
+    <div class="sec" style="display:flex;gap:8px;justify-content:flex-end">
+      ${canDelete?`<button class="btn danger" style="margin-right:auto" onclick="deleteTeam('${t.id}')">Delete team</button>`:''}
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn gold" onclick="saveTeamEdit('${t.id}',${isNew})">Save</button>
+    </div>
+  </div>`);
+  window._teamDraft=t;
+  const host=document.getElementById('brandPresets');
+  if(host)host.innerHTML=BRAND_PRESETS.map((p,i)=>
+    `<button type="button" class="preset-btn" onclick="applyPreset(${i})" title="${p.name}">
+       <span class="swatches"><i style="background:${p.primary}"></i><i style="background:${p.ink}"></i><i style="background:${p.accent}"></i></span>
+       <span>${p.name}</span></button>`).join('');
+}
+/* Wired both ways: dragging the native picker updates the hex text,
+   typing a valid hex updates the picker. Both write into the draft. */
+function syncColor(key,val){
+  const t=window._teamDraft;if(!t)return;
+  const map={tPrimary:'primary',tInk:'ink',tAccent:'accent'};
+  t.brand[map[key]]=val;
+  const el=document.getElementById(key);
+  if(el&&el.value.toLowerCase()!==val.toLowerCase())el.value=val.toUpperCase();
+  refreshCrestPickerSwatches();
+}
+function syncColorText(key,val){
+  if(!/^#[0-9A-Fa-f]{6}$/.test(val))return;
+  const t=window._teamDraft;if(!t)return;
+  const map={tPrimary:'primary',tInk:'ink',tAccent:'accent'};
+  t.brand[map[key]]=val;
+  const parent=document.getElementById(key)?.parentElement;
+  const picker=parent&&parent.querySelector('input[type=color]');
+  if(picker)picker.value=val;
+  refreshCrestPickerSwatches();
+}
+function refreshCrestPickerSwatches(){
+  const t=window._teamDraft;if(!t)return;
+  document.querySelectorAll('#crestPicker button').forEach(b=>{
+    const p=crestPaint({crest:b.dataset.crest,brand:t.brand});
+    b.style.background=p.bg;b.style.color=p.fg;
+  });
+}
+/* Named starter palettes for quick picking. */
+const BRAND_PRESETS=[
+  {name:'Royal blue',primary:'#004A98',ink:'#003273',accent:'#C9A227'},
+  {name:'7U gold',primary:'#D8C570',ink:'#B5903B',accent:'#0D0D0D'},
+  {name:'Crimson',primary:'#C0392B',ink:'#8E2A1E',accent:'#1B1B1B'},
+  {name:'Forest',primary:'#2E7D4F',ink:'#1F5636',accent:'#F5B93F'},
+  {name:'Navy',primary:'#0F1A34',ink:'#050A1D',accent:'#C9A227'},
+  {name:'Orange',primary:'#E67E22',ink:'#B85E10',accent:'#0F1A34'},
+  {name:'Purple',primary:'#6B2D8E',ink:'#4A1D66',accent:'#F5B93F'},
+  {name:'Teal',primary:'#008B8B',ink:'#005F5F',accent:'#F5B93F'}
+];
+function applyPreset(i){
+  const p=BRAND_PRESETS[i],t=window._teamDraft;if(!p||!t)return;
+  t.brand.primary=p.primary;t.brand.ink=p.ink;t.brand.accent=p.accent;
+  ['tPrimary','tInk','tAccent'].forEach((k,idx)=>{
+    const val=[p.primary,p.ink,p.accent][idx];
+    const txt=document.getElementById(k);
+    if(txt){txt.value=val.toUpperCase();
+      const picker=txt.parentElement.querySelector('input[type=color]');
+      if(picker)picker.value=val;}
+  });
+  refreshCrestPickerSwatches();
+}
+function pickCrest(k){
+  window._teamDraft.crest=k;
+  document.querySelectorAll('#crestPicker button').forEach(b=>
+    b.style.borderColor=b.dataset.crest===k?'var(--ink)':'transparent');
+}
+function saveTeamEdit(id,isNew){
+  const t=window._teamDraft;
+  t.name=document.getElementById('tName').value.trim()||'Team';
+  t.short=document.getElementById('tShort').value.trim()||t.name.slice(0,12);
+  t.brand.primary=document.getElementById('tPrimary').value;
+  t.brand.ink=document.getElementById('tInk').value;
+  t.brand.accent=document.getElementById('tAccent').value;
+  if(isNew){S.teams.push(t);S.currentTeamId=t.id;}
+  save();closeModal();applyBrand();renderTeamSwitcher();
+  if(isNew){buildTabs();document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+    document.getElementById('v-lineup').classList.add('on');
+    document.querySelector('#tabs button[data-v="lineup"]').classList.add('on');
+    renderPitch();renderPool();toast('Team added');}
+  else toast('Team updated');
+}
+function deleteTeam(id){
+  if(S.teams.length<=1){alert('Can\'t delete your only team.');return;}
+  const t=S.teams.find(x=>x.id===id);
+  if(!confirm('Delete "'+t.name+'" and all their players, games, and boards? Export first if you want a copy.'))return;
+  S.teams=S.teams.filter(x=>x.id!==id);
+  if(S.currentTeamId===id)S.currentTeamId=S.teams[0].id;
+  save();closeModal();setCurrentTeam(S.currentTeamId);toast('Team deleted');
+}
+
 function toggleTheme(){
   var cur=document.documentElement.getAttribute('data-theme')||'light';
   var next=cur==='dark'?'light':'dark';
@@ -626,12 +895,14 @@ const DEPTH=3;
 function blankPlayer(name){return{id:uid(),name:name||'',number:'',grade:'',positions:[],
   skills:{overall:0,speed:0,control:0,offense:0,defense:0,stamina:0},notes:[]};}
 
-/* Ships with no roster. Add players in the Roster tab, or import a JSON export. */
+/* Public build: starts with a single empty team; more can be added from the switcher. */
 function seed(){
+  const t={id:uid(),name:'My Team',short:'Team',
+    brand:{primary:'#004A98',ink:'#003273',accent:'#C9A227'},
+    crest:'default-royals',
+    players:[],games:[],boards:[],lineups:{},formation:'3-2-3-2'};
   return {
-    players:[], games:[], boards:[],
-    formation:'3-2-3-2',
-    lineups:{},
+    teams:[t],currentTeamId:t.id,
     settings:{
       goalTags:[{code:'H',label:'Header'},{code:'CK',label:'Corner kick'},{code:'FK',label:'Free kick'},{code:'PK',label:'Penalty kick'}],
       positions:['GK','SW','LB','CB','RB','LWB','RWB','CDM','CM','CAM','LM','RM','LW','RW','ST'],
@@ -642,18 +913,36 @@ function seed(){
 
 let S=null, depthMode=false, picked=null, drag=null;
 
+/* T() returns the currently selected team. Everything that used to hit S.players,
+   S.games, S.boards, S.lineups, S.formation now goes through here. */
+function T(){return S.teams.find(t=>t.id===S.currentTeamId)||S.teams[0];}
+function setCurrentTeam(id){
+  if(!S.teams.find(t=>t.id===id))return;
+  S.currentTeamId=id;
+  /* Every view reads from T() so a full re-render is the switch. */
+  depthMode=false;picked=null;
+  if(window.B){B.doc=null;B.hist=[];B.future=[];}
+  applyBrand();renderTeamSwitcher();
+  buildTabs();
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById('v-lineup').classList.add('on');
+  document.querySelector('#tabs button[data-v="lineup"]').classList.add('on');
+  renderPitch();renderPool();
+  save();
+}
+
 /* ============================ helpers ============================ */
-const P=id=>S.players.find(p=>p.id===id);
+const P=id=>T().players.find(p=>p.id===id);
 const byName=(a,b)=>a.name.localeCompare(b.name);
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');
   clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),1600);}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function slotKeys(f){const k=['GK'];FORMATIONS[f].forEach((r,i)=>r.forEach((_,j)=>k.push('r'+i+'c'+j)));return k;}
-function curLineup(){if(!S.lineups[S.formation])S.lineups[S.formation]={};return S.lineups[S.formation];}
+function curLineup(){const t=T();if(!t.lineups[t.formation])t.lineups[t.formation]={};return t.lineups[t.formation];}
 function slotArr(k){const L=curLineup();if(!L[k])L[k]=[];while(L[k].length<DEPTH)L[k].push(null);return L[k];}
-function posLabel(k){if(k==='GK')return 'GK';const m=/r(\d+)c(\d+)/.exec(k);return FORMATIONS[S.formation][+m[1]][+m[2]];}
+function posLabel(k){if(k==='GK')return 'GK';const m=/r(\d+)c(\d+)/.exec(k);return FORMATIONS[T().formation][+m[1]][+m[2]];}
 function placedIds(){const out=new Set();Object.values(curLineup()).forEach(a=>a.forEach(x=>x&&out.add(x)));return out;}
-function starterIds(){const out=new Set();slotKeys(S.formation).forEach(k=>{const v=slotArr(k)[0];if(v)out.add(v);});return out;}
+function starterIds(){const out=new Set();slotKeys(T().formation).forEach(k=>{const v=slotArr(k)[0];if(v)out.add(v);});return out;}
 
 /* ============================ tabs ============================ */
 const VIEWS=[['lineup','Lineup'],['roster','Roster'],['board','Board'],['games','Games'],['season','Season stats'],['record','Record'],['settings','Settings']];
@@ -674,20 +963,20 @@ function go(v){
 }
 
 /* ============================ lineup view ============================ */
-function setFormation(f){S.formation=f;save();renderPitch();renderPool();}
+function setFormation(f){T().formation=f;save();renderPitch();renderPool();}
 function setDepthMode(on){depthMode=on;
   document.getElementById('modeLineup').classList.toggle('on',!on);
   document.getElementById('modeDepth').classList.toggle('on',on);
   renderPitch();}
-function clearFormation(){if(!confirm('Clear every slot in this formation?'))return;S.lineups[S.formation]={};save();renderPitch();renderPool();}
+function clearFormation(){if(!confirm('Clear every slot in this formation?'))return;T().lineups[T().formation]={};save();renderPitch();renderPool();}
 
 function autoFill(){
   const used=new Set();
-  slotKeys(S.formation).forEach(k=>{
+  slotKeys(T().formation).forEach(k=>{
     const want=posLabel(k), arr=slotArr(k);
     for(let d=0;d<DEPTH;d++){
       if(arr[d]){used.add(arr[d]);continue;}
-      const cand=S.players.filter(p=>!used.has(p.id)&&p.positions.some(x=>x===want||want.includes(x)||x.includes(want)))
+      const cand=T().players.filter(p=>!used.has(p.id)&&p.positions.some(x=>x===want||want.includes(x)||x.includes(want)))
         .sort((a,b)=>(b.skills.overall||0)-(a.skills.overall||0))[0];
       if(cand){arr[d]=cand.id;used.add(cand.id);}
     }
@@ -699,12 +988,12 @@ function renderPitch(){
   const host=document.getElementById('pitchRows');
   host.className='rows'+(depthMode?'':' depth-hidden');
   const rows=[];
-  FORMATIONS[S.formation].forEach((r,i)=>{
+  FORMATIONS[T().formation].forEach((r,i)=>{
     rows.push(`<div class="prow">`+r.map((lab,j)=>slotHTML('r'+i+'c'+j,lab)).join('')+`</div>`);
   });
   rows.unshift(`<div class="prow">`+slotHTML('GK','GK')+`</div>`);
   host.innerHTML=rows.join('');   // column-reverse renders the first row at the bottom
-  document.getElementById('formationSel').value=S.formation;
+  document.getElementById('formationSel').value=T().formation;
 }
 function slotHTML(k,lab){
   const a=slotArr(k);
@@ -791,7 +1080,7 @@ function renderPool(){
   const q=document.getElementById('fSearch').value.trim().toLowerCase();
   const hide=document.getElementById('fHide').checked;
   const placed=placedIds();
-  const list=S.players.filter(p=>
+  const list=T().players.filter(p=>
     (!pos||p.positions.includes(pos))&&(!gr||p.grade===gr)&&(!q||p.name.toLowerCase().includes(q))&&
     (!hide||!placed.has(p.id))).sort(byName);
   document.getElementById('poolList').innerHTML=list.length?list.map(p=>
@@ -799,7 +1088,7 @@ function renderPool(){
       <span class="grip" onpointerdown="poolDown(event,'${p.id}')" title="Drag to a slot">\u283F</span>
       <span class="num">${esc(p.number||'')}</span><span class="nm">${esc(p.name)}</span>
       <span class="meta">${esc(p.positions.slice(0,2).join('/'))}${p.grade?' · '+esc(p.grade):''}</span>
-    </div>`).join(''):(S.players.length?'<div class="empty">No players match.</div>'
+    </div>`).join(''):(T().players.length?'<div class="empty">No players match.</div>'
       :'<div class="empty">No roster yet.<br><br>Add players in the <strong>Roster</strong> tab, or tap <strong>Import</strong> up top to load a JSON export.</div>');
 }
 function pick(id){if(noClick)return;picked=picked===id?null:id;
@@ -848,7 +1137,7 @@ function ensureTierBar(view){
   host.innerHTML=tierChips();
 }
 function fitTables(){
-  document.querySelectorAll('.view.on.has-table').forEach(v=>{
+  document.querySelectorAll('.view.on.single-table').forEach(v=>{
     const bar=v.querySelector('.bar');
     if(!bar)return;
     const rect=bar.getBoundingClientRect();
@@ -864,7 +1153,7 @@ function renderRoster(){
   fillSelect('rGrade','Any grade',S.settings.grades);
   const pos=document.getElementById('rPos').value,gr=document.getElementById('rGrade').value;
   const q=document.getElementById('rSearch').value.trim().toLowerCase();
-  const filt=S.players.filter(p=>(!pos||p.positions.includes(pos))&&(!gr||p.grade===gr)&&(!q||p.name.toLowerCase().includes(q)));
+  const filt=T().players.filter(p=>(!pos||p.positions.includes(pos))&&(!gr||p.grade===gr)&&(!q||p.name.toLowerCase().includes(q)));
   tableSort('roster','name',1);
   const list=sortRows('roster',filt,(a,b,k)=>{
     if(k==='number'){const av=a.number?parseInt(a.number,10):Infinity,bv=b.number?parseInt(b.number,10):Infinity;
@@ -880,7 +1169,7 @@ function renderRoster(){
     if(SKILLS.some(([sk])=>sk===k))return (a.skills[k]||0)-(b.skills[k]||0)||a.name.localeCompare(b.name);
     return 0;
   });
-  document.getElementById('rCount').textContent=list.length+' of '+S.players.length+' players';
+  document.getElementById('rCount').textContent=list.length+' of '+T().players.length+' players';
   document.getElementById('rosterTable').innerHTML=
    `<thead><tr>${sortHeader('roster','number','#','n')}${sortHeader('roster','name','Player')}${sortHeader('roster','grade','Grade')}${sortHeader('roster','positions','Positions')}
     ${SKILLS.map(([k,l])=>sortHeader('roster',k,l,'n')).join('')}${sortHeader('roster','notes','Notes','n')}<th class="nosort"></th></tr></thead>
@@ -969,14 +1258,14 @@ function savePlayer(id,isNew){
   p.grade=document.getElementById('pGrade').value;
   p.positions=[...document.querySelectorAll('#posPick .chip.gold')].map(b=>b.dataset.pos);
   SKILLS.forEach(([k])=>p.skills[k]=+document.getElementById('sk_'+k).dataset.v);
-  if(isNew)S.players.push(p);
+  if(isNew)T().players.push(p);
   save();closeModal();renderRoster();renderPool();renderPitch();
 }
 function delPlayer(id){
   if(!confirm('Delete this player and their slot assignments? Game stats already recorded stay put.'))return;
-  S.players=S.players.filter(p=>p.id!==id);
-  Object.values(S.lineups).forEach(L=>Object.keys(L).forEach(k=>L[k]=L[k].map(x=>x===id?null:x)));
-  S.games.forEach(g=>{if(g.active)g.active=g.active.filter(x=>x!==id);});
+  const t=T();t.players=t.players.filter(p=>p.id!==id);
+  Object.values(t.lineups).forEach(L=>Object.keys(L).forEach(k=>L[k]=L[k].map(x=>x===id?null:x)));
+  t.games.forEach(g=>{if(g.active)g.active=g.active.filter(x=>x!==id);});
   save();closeModal();renderRoster();renderPool();renderPitch();
 }
 
@@ -1179,23 +1468,23 @@ function boardSave(){
   if(name===null)return;
   B.doc.name=name.trim()||'Untitled';
   B.doc.date=new Date().toISOString().slice(0,10);
-  const i=S.boards.findIndex(b=>b.id===B.doc.id);
-  if(i>=0)S.boards[i]=clone(B.doc);else S.boards.push(clone(B.doc));
+  const t=T();const i=t.boards.findIndex(b=>b.id===B.doc.id);
+  if(i>=0)t.boards[i]=clone(B.doc);else t.boards.push(clone(B.doc));
   save();boardShow();toast('Saved "'+B.doc.name+'"');
 }
 function boardLoad(id){
-  const b=S.boards.find(x=>x.id===id);if(!b)return;
+  const b=T().boards.find(x=>x.id===id);if(!b)return;
   B.doc=clone(b);B.hist=[];B.future=[];boardShow();
 }
 function boardNew(){B.doc=newDoc();B.hist=[];B.future=[];boardShow();}
 function boardDup(id){
-  const b=S.boards.find(x=>x.id===id);if(!b)return;
+  const b=T().boards.find(x=>x.id===id);if(!b)return;
   B.doc=clone(b);B.doc.id=uid();B.doc.name=b.name+' copy';B.hist=[];B.future=[];boardShow();
 }
 function boardDelete(id){
-  const b=S.boards.find(x=>x.id===id);if(!b)return;
+  const t=T();const b=t.boards.find(x=>x.id===id);if(!b)return;
   if(!confirm('Delete "'+b.name+'"?'))return;
-  S.boards=S.boards.filter(x=>x.id!==id);
+  t.boards=t.boards.filter(x=>x.id!==id);
   if(B.doc.id===id)boardNew();
   save();boardShow();
 }
@@ -1205,7 +1494,7 @@ function renderSaved(){
       <h4>New drawing</h4>
       <p style="color:var(--muted);font-size:12px;margin:4px 0 9px">Start from a blank pitch.</p>
       <button class="btn sm" onclick="boardNew()">Blank</button></div>`+
-    S.boards.map(b=>`<div class="card">
+    T().boards.map(b=>`<div class="card">
       <h4>${esc(b.name)}</h4>
       <div style="color:var(--muted);font-size:12px;margin:3px 0 9px">
         ${b.strokes.length} strokes · ${b.view==='half'?'half':'full'} pitch${b.date?' · '+b.date:''}</div>
@@ -1257,7 +1546,7 @@ function renderGames(){
       </div></div>`;}).join(''):('<div class="empty">'+(tierFilter==='ALL'?'No games yet. Add one to start tracking.':'No '+tierFilter+'-team games yet. Switch the filter above or add one.')+'</div>');
 }
 function openGame(id){
-  const g=id?S.games.find(x=>x.id===id):blankGame();
+  const g=id?T().games.find(x=>x.id===id):blankGame();
   const isNew=!id;
   modal(`<div class="modal">
     <div class="modal-head"><h2>${isNew?'Add game':'Edit game'}</h2><button class="btn sm" onclick="closeModal()">Close</button></div>
@@ -1303,11 +1592,11 @@ function saveGame(id,isNew){
   g.htUs=document.getElementById('gHU').value; g.htThem=document.getElementById('gHT').value;
   g.fUs=document.getElementById('gFU').value;  g.fThem=document.getElementById('gFT').value;
   g.soUs=document.getElementById('gSU').value; g.soThem=document.getElementById('gST').value;
-  if(isNew)S.games.push(g);
+  if(isNew)T().games.push(g);
   save();closeModal();renderGames();
 }
 function delGame(id){if(!confirm('Delete this game and its stats?'))return;
-  S.games=S.games.filter(x=>x.id!==id);save();closeModal();renderGames();}
+  T().games=T().games.filter(x=>x.id!==id);save();closeModal();renderGames();}
 
 /* ---------- stat entry ---------- */
 let statTab='field';
@@ -1329,7 +1618,7 @@ function tierChips(){
     </span>`;
 }
 function tierMatch(g){return tierFilter==='ALL'||g.tier===tierFilter;}
-function filteredGames(){return S.games.filter(tierMatch);}
+function filteredGames(){return T().games.filter(tierMatch);}
 const ROLE_ORDER=['F','M','D','GK','U'];
 const ROLE_NAME={F:'Forwards',M:'Midfield',D:'Defense',GK:'Goalies',U:'Unassigned'};
 const POS_BUCKET={ST:'F',CF:'F',F:'F',LW:'F',RW:'F',LS:'F',RS:'F',
@@ -1340,7 +1629,7 @@ const POS_BUCKET={ST:'F',CF:'F',F:'F',LW:'F',RW:'F',LS:'F',RS:'F',
    that is the job they actually do. Starters first, then any depth slot,
    then whatever positions are on their roster card. */
 function roleOf(pid){
-  const keys=slotKeys(S.formation);
+  const keys=slotKeys(T().formation);
   for(const k of keys)if(slotArr(k)[0]===pid)return POS_BUCKET[posLabel(k)]||'U';
   for(const k of keys)if(slotArr(k).includes(pid))return POS_BUCKET[posLabel(k)]||'U';
   const p=P(pid);if(!p)return 'U';
@@ -1356,11 +1645,11 @@ function toggleActive(pid){
 }
 function activeFromStarters(){
   const g=window._statGame;g.active=[...starterIds()];
-  save();drawStats(true);toast('On field set from the '+S.formation+' starters');
+  save();drawStats(true);toast('On field set from the '+T().formation+' starters');
 }
 function activeNone(){const g=window._statGame;g.active=[];save();drawStats(true);}
 function openStats(id){
-  const g=S.games.find(x=>x.id===id);window._statGame=g;
+  const g=T().games.find(x=>x.id===id);window._statGame=g;
   modal(`<div class="modal wide">
     <div class="modal-head"><h2>${esc(g.opponent||'Game')} — ${g.date}</h2>
       <span class="chip">${scoreLine(g)}</span><button class="btn sm" onclick="closeModal()">Close</button></div>
@@ -1402,7 +1691,7 @@ function drawStats(keepScroll){
   /* Keepers appear on BOTH tabs — they take shots and win balls too.
      The only thing that changes is which end of the list they sort to. */
   const order=statTab==='keeper'?['GK','D','M','F','U']:ROLE_ORDER;
-  const list=S.players
+  const list=T().players
     .filter(p=>(!q||p.name.toLowerCase().includes(q))&&(!only||has(p))&&(!hideBench||isOn(g,p.id)))
     .sort((a,b)=>{
       const ao=isOn(g,a.id),bo=isOn(g,b.id);
@@ -1476,7 +1765,7 @@ function commitGoal(pid,tag){
 /* season sort now uses shared SORTS */
 function totals(){
   const out={};
-  S.players.forEach(p=>out[p.id]={p,gp:0,goals:0,assists:0,shots:0,stops:0,good:0,saves:0,allowed:0,minutes:0,tags:{}});
+  T().players.forEach(p=>out[p.id]={p,gp:0,goals:0,assists:0,shots:0,stops:0,good:0,saves:0,allowed:0,minutes:0,tags:{}});
   filteredGames().forEach(g=>{
     Object.entries(g.stats).forEach(([pid,s])=>{
       const o=out[pid];if(!o)return;
@@ -1622,8 +1911,8 @@ function importJSON(input){
       const d=JSON.parse(r.result);
       if(!d.players||!Array.isArray(d.players))throw new Error('No players array in that file.');
       if(!confirm('Replace everything currently in this browser with the imported file?'))return;
-      S=migrate(d);save();boot(true);B.doc=null;B.hist=[];B.future=[];
-      toast('Imported '+S.players.length+' players');
+      S=migrate(d);save();boot(true);if(window.B){B.doc=null;B.hist=[];B.future=[];}
+      toast('Imported '+S.teams.reduce((n,t)=>n+t.players.length,0)+' players across '+S.teams.length+' team(s)');
     }catch(e){alert("Couldn't read that file: "+e.message);}
     input.value='';
   };
@@ -1633,16 +1922,29 @@ function wipe(){if(!confirm('Erase all players, games and settings? Export first
   S=seed();save();boot(true);toast('All data erased');}
 
 function migrate(d){
-  d.settings=d.settings||seed().settings;
-  d.settings.goalTags=d.settings.goalTags||[];
-  d.settings.positions=d.settings.positions||[];
-  d.settings.grades=d.settings.grades||[];
-  d.lineups=d.lineups||{};d.games=d.games||[];d.boards=d.boards||[];
-  d.games.forEach(g=>{g.stats=g.stats||{};g.active=g.active||[];g.tier=g.tier||'A';});
-  d.boards.forEach(b=>{b.strokes=b.strokes||[];b.view=b.view||'full';});
-  if(!FORMATIONS[d.formation])d.formation='3-2-3-2';
-  d.players.forEach(p=>{p.skills=Object.assign({overall:0,speed:0,control:0,offense:0,defense:0,stamina:0},p.skills||{});
-    p.notes=p.notes||[];p.positions=p.positions||[];});
+  d.settings=d.settings||{};
+  d.settings.goalTags=d.settings.goalTags||[{code:'H',label:'Header'},{code:'CK',label:'Corner kick'},{code:'FK',label:'Free kick'},{code:'PK',label:'Penalty kick'}];
+  d.settings.positions=d.settings.positions||['GK','SW','LB','CB','RB','LWB','RWB','CDM','CM','CAM','LM','RM','LW','RW','ST'];
+  d.settings.grades=d.settings.grades||['6th','7th','8th'];
+  if(!d.teams){
+    const legacy={id:uid(),name:'Royals',short:'Royals',
+      brand:{primary:'#004A98',ink:'#003273',accent:'#C9A227'},crest:'default-royals',
+      players:d.players||[],games:d.games||[],boards:d.boards||[],
+      lineups:d.lineups||{},formation:d.formation||'3-2-3-2'};
+    d.teams=[legacy];d.currentTeamId=legacy.id;
+    delete d.players;delete d.games;delete d.boards;delete d.lineups;delete d.formation;
+  }
+  d.teams.forEach(t=>{
+    t.brand=t.brand||{primary:'#004A98',ink:'#003273',accent:'#C9A227'};
+    t.crest=t.crest||'default-royals';
+    t.players=t.players||[];t.games=t.games||[];t.boards=t.boards||[];t.lineups=t.lineups||{};
+    if(!FORMATIONS[t.formation])t.formation='3-2-3-2';
+    t.boards.forEach(b=>{b.strokes=b.strokes||[];b.view=b.view||'full';});
+    t.games.forEach(g=>{g.stats=g.stats||{};g.active=g.active||[];g.tier=g.tier||'A';});
+    t.players.forEach(p=>{p.skills=Object.assign({overall:0,speed:0,control:0,offense:0,defense:0,stamina:0},p.skills||{});
+      p.notes=p.notes||[];p.positions=p.positions||[];});
+  });
+  if(!d.currentTeamId||!d.teams.find(t=>t.id===d.currentTeamId))d.currentTeamId=d.teams[0]&&d.teams[0].id;
   return d;
 }
 
@@ -1655,6 +1957,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 /* ============================ boot ============================ */
 function boot(skipLoad){
   document.getElementById('formationSel').innerHTML=Object.keys(FORMATIONS).map(f=>`<option>${f}</option>`).join('');
+  applyBrand();renderTeamSwitcher();
   buildTabs();
   renderPitch();renderPool();renderRoster();renderSettings();
   if(!skipLoad)go('lineup');
